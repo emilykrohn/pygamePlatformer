@@ -21,7 +21,8 @@ PLAYER_SPEED = 5
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.Rect = pygame.Rect(30,30,60,60)
+        self.Rect = pygame.Rect(0,0,40,40) # Create square size 40 by 40 pixels
+        self.Rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5) # Change start position of player
 
     def move(self):
         key = pygame.key.get_pressed()
