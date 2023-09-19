@@ -16,14 +16,24 @@ DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT)) # (0,0) is i
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption("Game")
 
+PLAYER_SPEED = 5
+
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+        self.Rect = pygame.Rect(30,30,60,60)
 
-    def draw(self):
-        pygame.draw.rect(DISPLAYSURF, BLACK, pygame.Rect(30,30,60,60))
+    def move(self):
+        key = pygame.key.get_pressed()
+        if key[pygame.K_a]:
+            self.Rect.move_ip(-PLAYER_SPEED, 0)
+        if key[pygame.K_d]:
+            self.Rect.move_ip(PLAYER_SPEED, 0)
 
-P1 = Player()
+    def draw(self, surface):
+        pygame.draw.rect(surface, BLACK, self.Rect)
+
+player = Player()
 
 while True:
     for event in pygame.event.get():
@@ -31,6 +41,7 @@ while True:
             pygame.quit()
             sys.exit()
     DISPLAYSURF.fill(WHITE)
-    P1.draw()
+    player.draw(DISPLAYSURF)
+    player.move()
     pygame.display.update()
     FramesPerSec.tick(FPS) # Puts a limit on how many FPS
