@@ -40,9 +40,9 @@ class Player(pygame.sprite.Sprite):
 
     def move(self):
         key = pygame.key.get_pressed()
-        if key[pygame.K_a]:
+        if key[pygame.K_a] and self.Rect.left >= 0: # Prevents the player from going offscreen to the left
             self.Rect.move_ip(-PLAYER_SPEED, 0)
-        if key[pygame.K_d]:
+        if key[pygame.K_d] and self.Rect.right <= SCREEN_WIDTH:
             self.Rect.move_ip(PLAYER_SPEED, 0)
 
     def draw(self, surface):
@@ -69,10 +69,16 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    player.jump()
+
+    # Draws game objects        
     DISPLAYSURF.fill(WHITE)
     pygame.draw.rect(DISPLAYSURF, BLACK, ground)
     player.draw(DISPLAYSURF)
+
+    # Player actions
     player.move()
+    player.jump()
+
+    # Displays all updates the the game state
     pygame.display.update()
     FramesPerSec.tick(FPS) # Puts a limit on how many FPS
